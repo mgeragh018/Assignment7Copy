@@ -12,7 +12,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewNext"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBack"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -20,7 +20,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewBack"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewNext"
         tools:src="@tools:sample/avatars" />
 
     <EditText
