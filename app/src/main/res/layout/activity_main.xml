@@ -9,7 +9,6 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/ContainerView1"
-        android:name="edu.temple.browsr.PageFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/ContainerView2"
