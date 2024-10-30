@@ -8,6 +8,7 @@ class UrlViewModel : ViewModel() {
 
     private val urlLiveData = MutableLiveData<String>()
     var hasSeenSelection = false
+
     fun getUrl(): LiveData<String> {
         return urlLiveData
     }

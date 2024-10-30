@@ -5,16 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 
 
 class ControlFragment : Fragment() {
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    private val urlViewModel : UrlViewModel by lazy {
+        ViewModelProvider(requireActivity())[UrlViewModel::class.java]
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +30,20 @@ class ControlFragment : Fragment() {
         val imageViewGo = view.findViewById<ImageView>(R.id.imageViewGo)
         val imageViewNext = view.findViewById<ImageView>(R.id.imageViewNext)
         val imageViewBack = view.findViewById<ImageView>(R.id.imageViewBack)
-
+        val editTextUrl = view.findViewById<EditText>(R.id.editTextUrl)
 
         imageViewGo.setImageResource(R.drawable.play_arrow)
         imageViewNext.setImageResource(R.drawable.arrow_forward)
         imageViewBack.setImageResource(R.drawable.arrow_back)
-    }
+
+        imageViewGo.setOnClickListener {
+            val url = editTextUrl.text.toString().trim()
+
+
+            if (url.isNotEmpty()) {
+                urlViewModel.updateUrl(url)
+            }
+    }   }
 
     companion object {
 
