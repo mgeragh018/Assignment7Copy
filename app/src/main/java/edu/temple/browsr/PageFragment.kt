@@ -33,29 +33,25 @@ class PageFragment : Fragment() {
 
         webView = view.findViewById(R.id.webView)
 
-        webView.settings.apply {
-            javaScriptEnabled = true
-            domStorageEnabled = true
-            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // Allow mixed content
-        }
-
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?, request: WebResourceRequest?
-            ): Boolean {
-                request?.url?.let {
-                    Log.d("PageFragment", "Loading URL: ${it.toString()}")
-                    view?.loadUrl(it.toString())
-                }
-                return true
-            }
-
-        }
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = WebViewClient()
 
 
         urlViewModel.getUrl().observe(viewLifecycleOwner) { url ->
             if (!url.isNullOrEmpty()) {
                 webView.loadUrl(url)
+            }
+        }
+        urlViewModel.getNavigateForward().observe(viewLifecycleOwner) { navigateForward ->
+            if (navigateForward && webView.canGoForward()) {
+                webView.goForward()
+            }
+        }
+
+
+        urlViewModel.getNavigateBackward().observe(viewLifecycleOwner) { navigateBackward ->
+            if (navigateBackward && webView.canGoBack()) {
+                webView.goBack()
             }
         }
     }

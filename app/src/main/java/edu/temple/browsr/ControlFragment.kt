@@ -38,12 +38,18 @@ class ControlFragment : Fragment() {
 
         imageViewGo.setOnClickListener {
             val url = editTextUrl.text.toString().trim()
-
-
             if (url.isNotEmpty()) {
                 urlViewModel.updateUrl(url)
             }
-    }   }
+        }
+        imageViewNext.setOnClickListener {
+            urlViewModel.navigateForward()
+        }
+
+        imageViewBack.setOnClickListener {
+            urlViewModel.navigateBackward()
+        }
+    }
 
     companion object {
 

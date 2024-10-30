@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val urlViewModel = ViewModelProvider(this)[UrlViewModel::class.java]
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.ContainerView1)
 
         if (savedInstanceState == null) {
             val pageFragment = PageFragment()
@@ -24,15 +25,15 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
-        urlViewModel.getUrl().observe(this) { url ->
+        // Observe URL changes
+        urlViewModel.getUrl().observe(this) {
             if (!urlViewModel.hasSeenSelection) {
                 val pageFragment = PageFragment()
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.ContainerView1, pageFragment)
+                    .add(R.id.ContainerView1, pageFragment)
                     .setReorderingAllowed(true)
                     .addToBackStack(null)
                     .commit()
-
                 urlViewModel.hasSeenSelection = true
             }
         }

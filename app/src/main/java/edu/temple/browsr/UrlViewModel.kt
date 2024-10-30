@@ -8,6 +8,8 @@ class UrlViewModel : ViewModel() {
 
     private val urlLiveData = MutableLiveData<String>()
     var hasSeenSelection = false
+    private val navigateForwardLiveData = MutableLiveData<Boolean>()
+    private val navigateBackwardLiveData = MutableLiveData<Boolean>()
 
     fun getUrl(): LiveData<String> {
         return urlLiveData
@@ -16,6 +18,21 @@ class UrlViewModel : ViewModel() {
     fun updateUrl(newUrl: String) {
         hasSeenSelection = false
         urlLiveData.value = newUrl
+    }
+    fun getNavigateForward(): LiveData<Boolean> {
+        return navigateForwardLiveData
+    }
+
+    fun navigateForward() {
+        navigateForwardLiveData.value = true
+    }
+
+    fun getNavigateBackward(): LiveData<Boolean> {
+        return navigateBackwardLiveData
+    }
+
+    fun navigateBackward() {
+        navigateBackwardLiveData.value = true
     }
 
 }
