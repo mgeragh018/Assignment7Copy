@@ -14,7 +14,7 @@ class ControlFragment : Fragment() {
     private val urlViewModel : UrlViewModel by lazy {
         ViewModelProvider(requireActivity())[UrlViewModel::class.java]
     }
-
+    private lateinit var editTextUrl: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +30,7 @@ class ControlFragment : Fragment() {
         val imageViewGo = view.findViewById<ImageView>(R.id.imageViewGo)
         val imageViewNext = view.findViewById<ImageView>(R.id.imageViewNext)
         val imageViewBack = view.findViewById<ImageView>(R.id.imageViewBack)
-        val editTextUrl = view.findViewById<EditText>(R.id.editTextUrl)
+        editTextUrl = view.findViewById<EditText>(R.id.editTextUrl)
 
         imageViewGo.setImageResource(R.drawable.play_arrow)
         imageViewNext.setImageResource(R.drawable.arrow_forward)
@@ -42,12 +42,23 @@ class ControlFragment : Fragment() {
                 urlViewModel.updateUrl(url)
             }
         }
-        imageViewNext.setOnClickListener {
-            urlViewModel.navigateForward()
+        imageViewBack.setOnClickListener {
+            if (urlViewModel.canGoBack()) {
+                urlViewModel.navigateBackward()
+            }
         }
 
-        imageViewBack.setOnClickListener {
-            urlViewModel.navigateBackward()
+        imageViewNext.setOnClickListener {
+            if (urlViewModel.canGoForward()) {
+                urlViewModel.navigateForward()
+            }
+        }
+
+        //this logic allows me to set the url to clicked url
+        urlViewModel.getUrl().observe(viewLifecycleOwner) { url ->
+            if (!url.isNullOrEmpty() && editTextUrl.text.toString() != url) {
+                editTextUrl.setText(url)
+            }
         }
     }
 

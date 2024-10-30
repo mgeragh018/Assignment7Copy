@@ -38,7 +38,6 @@ class PageFragment : Fragment() {
         // Set a custom WebViewClient
         webView.webViewClient = object : WebViewClient() {
 
-            // Override shouldOverrideUrlLoading to print the clicked URL
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
@@ -46,9 +45,11 @@ class PageFragment : Fragment() {
                 val clickedUrl = request?.url.toString()
                 Log.d("PageFragment", "User clicked URL: $clickedUrl")
 
-                // Load the URL in the WebView
-                view?.loadUrl(clickedUrl)
-                return true
+                // Update the ViewModel to reflect the new URL for the EditText
+                urlViewModel.updateUrl(clickedUrl)
+
+                // Return false to allow the WebView to handle the URL loading
+                return false
             }
         }
 
@@ -60,16 +61,15 @@ class PageFragment : Fragment() {
         }
 
         // Handle forward navigation
-        urlViewModel.getNavigateForward().observe(viewLifecycleOwner) { navigateForward ->
-            if (navigateForward && webView.canGoForward()) {
-                webView.goForward()
+        fun navigateBack() {
+            if (webView.canGoBack()) {
+                webView.goBack()
             }
         }
 
-        // Handle backward navigation
-        urlViewModel.getNavigateBackward().observe(viewLifecycleOwner) { navigateBackward ->
-            if (navigateBackward && webView.canGoBack()) {
-                webView.goBack()
+        fun navigateForward() {
+            if (webView.canGoForward()) {
+                webView.goForward()
             }
         }
     }
